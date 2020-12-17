@@ -21,6 +21,8 @@ Koopa::Koopa(Player* mario, int id_Koopa)
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	if (isDeath)
+		return;
 	left = x + 1;
 	top = y + 11;
 	bottom = top + KOOPAS_BBOX_HEIGHT_DIE;
@@ -86,7 +88,8 @@ void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 void Koopa::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-
+	if (isDeath)
+		return;
 	if (GetState() == KOOPA_RED_STATE_HOLDING ||
 		GetState() == KOOPA_RED_STATE_HOLDING_UP ||
 		GetState() == KOOPA_GREEN_STATE_HOLDING ||
@@ -365,6 +368,17 @@ void Koopa::CheckCollisionWithBrick(vector<LPGAMEENTITY>* coObjects)
 
 void Koopa::Render()
 {
+	if (isDoneDeath)
+		return;
+	if (isDeath)
+	{
+		animationSet->at(KOOPA_GREEN_STATE_DIE)->Render(nx, x, y);
+		if (animationSet->at(ani)->GetCurrentFrame() == 4 && ani == KOOPA_GREEN_STATE_DIE)
+		{
+			isDoneDeath = true;
+		}
+		return;
+	}
 	//DebugOut(L"nx %d ani %d \n", this->nx, state);
 	animationSet->at(state)->Render(-this->nx, x, y);
 	for (int i = 0; i < listEffect.size(); i++)

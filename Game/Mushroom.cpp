@@ -19,10 +19,10 @@ void Mushroom::GetBoundingBox(float& left, float& top, float& right, float& bott
 {
 	if (!isOnTop)
 	{
-		left = x + 10;
-		top = y + 10;
-		right = left + 2;
-		bottom = top + 5;
+		left = x + 2;
+		top = y + 2;
+		right = left + 10;
+		bottom = top + 13;
 	}
 	else
 	{

@@ -227,7 +227,7 @@ void PlayScene::PlayerTailAttackEnemy()
 			VenusNoFire* venusNoFire = dynamic_cast<VenusNoFire*>(listEnemies[i]);
 			if (tail->IsCollidingObject(venusNoFire))
 			{
-				venusNoFire->isdone = true;
+				venusNoFire->isDeath = true;
 			}
 		}
 		
@@ -250,13 +250,62 @@ void PlayScene::PlayerTailAttackEnemy()
 							ItemP* itemP = dynamic_cast<ItemP*>(listitems[i]);
 							itemP->isCollis = true;
 						}
+
 					}
+
 					return;
 				}
 				brokenBrick->SetState(STATE_DESTROYED);
 			}
 		}
+		if (listObjects[i]->GetType() == EntityType::CBRICK)
+		{
+			CBrick* cBrick = dynamic_cast<CBrick*>(listObjects[i]);
+
+			if (tail->IsCollidingObject(cBrick))
+			{
+				cBrick->SetState(CBRICK_STATE_COLLISION);
+			}
+		}
 	}
+
+	for (UINT i = 0; i < listitems.size(); i++)
+	{
+		if (listitems[i]->GetType() == EntityType::MUSH)
+		{
+			if (tail->IsCollidingObject(listitems[i]) && player->level == MARIO_LEVEL_SMALL)
+			{
+				Mushroom* mush = dynamic_cast<Mushroom*>(listitems[i]);
+				if (mush->isOnTop == false)
+				{
+					listitems[i]->SetState(MUSHROOM_STATE_WALKING);
+				}
+			}
+		}
+		if (listitems[i]->GetType() == EntityType::MONEY)
+		{
+			if (tail->IsCollidingObject(listitems[i]))
+			{
+				Money* money = dynamic_cast<Money*>(listitems[i]);
+				if (money->isOnTop == false)
+					listitems[i]->SetState(MONEY_STATE_WALKING);
+			}
+		}
+	}
+	for (UINT i = 0; i < listLeaf.size(); i++)
+	{
+
+		if (listLeaf[i]->GetType() == EntityType::LEAF && (player->level == MARIO_LEVEL_BIG || player->level == MARIO_LEVEL_RACCOON) && isCheckMushroom == false)
+		{
+			if (tail->IsCollidingObject(listLeaf[i]) && player->level)
+			{
+				Leaf* leaf = dynamic_cast<Leaf*>(listLeaf[i]);
+				if (leaf->isOnTop == false)
+					listLeaf[i]->SetState(LEAF_STATE_WALKING);
+			}
+		}
+	}
+
 }
 
 void PlayScene::DarkenTheScreen()
@@ -459,6 +508,26 @@ void PlayScene::PlayerTouchItem()
 				if (!itemP->isCollis)
 				{
 					itemP->isCollis = true;
+					Entity *obj = new CBrick(2032, 368, 16, 16);
+					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+					LPANIMATION_SET ani_set = animation_sets->Get(4);
+					obj->SetAnimationSet(ani_set);
+					CBrick* cBrick = dynamic_cast<CBrick*>(obj);
+					for (UINT i = 0; i < listObjects.size(); i++)
+					{
+						//DebugOut(L" show list object %d \n", listObjects[i]->tag);
+						if (listObjects[i]->tag == EntityType::BROKENBRICK)
+						{
+							BrokenBrick* brick = dynamic_cast<BrokenBrick*>(listObjects[i]);
+							if (brick->x == 2032 && brick->y == 368) // cuc gach do nut P
+							{
+								brick->SetState(STATE_HIDE);
+							}
+						}
+					}
+					cBrick->SetState(CBRICK_STATE_COLLISION);
+					listObjects.push_back(obj);
+
 					//DebugOut(L"dap nut lan 1 \n");
 				}
 				else

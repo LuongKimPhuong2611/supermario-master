@@ -4,6 +4,8 @@
 #include "Goomba.h"
 #include "Koopa.h"
 #include "Player.h"
+#include "Venus.h"
+#include "VenusNoFire.h"
 
 MarioBullet::MarioBullet()
 {
@@ -25,6 +27,7 @@ void MarioBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 	if (isDone == true)
 	{
 		alpha = 0;
+		return;
 	}
 	else
 	{
@@ -127,6 +130,7 @@ void MarioBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 							goomba->SetState(GOOMBA_RED_STATE_NO_WING_DIE_FLY);
 							goomba->hasWing = false;
 					}
+					isDone = true;
 				}
 				else if (e->obj->GetType() == EntityType::KOOPA)
 				{
@@ -136,6 +140,26 @@ void MarioBullet::Update(DWORD dt, vector<LPGAMEENTITY>* colliable_objects)
 					else if (koopa->id_koopa == KOOPA_GREEN)
 						koopa->SetState(KOOPA_GREEN_STATE_DIE_UP);
 					koopa->hitByWeapon = true;
+					isDone = true;
+				}
+				else if (e->obj->GetType() == EntityType::VENUS)
+				{
+					Venus* venus = dynamic_cast<Venus*>(e->obj);
+					venus->isDeath = true;
+					isDone = true;
+	
+				}
+				else if (e->obj->GetType() == EntityType::VENUSGREEN)
+				{
+					Venus* venus = dynamic_cast<Venus*>(e->obj);
+					venus->isDeath = true;
+					isDone = true;
+				}
+				else if (e->obj->GetType() == EntityType::VENUSNOFIRE)
+				{
+					VenusNoFire* venusNoFire = dynamic_cast<VenusNoFire*>(e->obj);
+					venusNoFire->isDeath = true;
+					isDone = true;
 				}
 			}
 		}

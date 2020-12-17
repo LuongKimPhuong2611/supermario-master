@@ -23,6 +23,8 @@ Goomba::Goomba(Player* mario)
 void Goomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	//DebugOut(L"id gooooo %d \n", id_goomba);
+	if (isDeath)
+		return;
 	if (id_goomba == GOOMBA_NORMAL)
 	{
 		if (state != GOOMBA_STATE_DIE && state != GOOMBA_STATE_DIE_FLY)
@@ -71,6 +73,8 @@ void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	// 	
 	//DebugOut(L"id goomba %d \n",id_goomba);
 	//
+	if (isDeath)
+		return;
 	if (id_goomba == 2)
 	{
 		if (hasWing)
@@ -230,6 +234,17 @@ void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 
 void Goomba::Render()
 {
+	if (isDoneDeath)
+		return;
+	if (isDeath)
+	{
+		animationSet->at(GOOMBA_RED_STATE_DIE)->Render(nx, x, y);
+		if (animationSet->at(ani)->GetCurrentFrame() == 4 && ani == GOOMBA_RED_STATE_DIE)
+		{
+			isDoneDeath = true;
+		}
+		return;
+	}
 	if (state == GOOMBA_STATE_DIE || state == GOOMBA_RED_STATE_NO_WING_DIE)
 	{
 		if (timeRenderAniDie == 0)

@@ -36,13 +36,16 @@
 #define KOOPA_GREEN_STATE_HOLDING_UP	 19
 #define KOOPA_GREEN_STATE_HAS_WING_FLY_LEFT	20
 #define KOOPA_GREEN_STATE_HAS_WING_FLY_RIGHT 21
+#define KOOPA_GREEN_STATE_DIE			 22
 
 class Koopa : public Entity
 {
 
 public:
 	float bLeft, bRight;
-
+	bool isDeath;
+	bool isDoneDeath;
+	int ani;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);
 	virtual void Render();

@@ -19,6 +19,7 @@
 #define GOOMBA_RED_STATE_NO_WING_WALK		6
 #define GOOMBA_RED_STATE_NO_WING_DIE		7
 #define GOOMBA_RED_STATE_NO_WING_DIE_FLY	8
+#define GOOMBA_RED_STATE_DIE				9
 
 #define GOOMBA_NORMAL 1
 #define GOOMBA_RED 2
@@ -33,6 +34,9 @@ public:
 	Player* Mario;
 	DWORD readyToFlyHigh;
 	int countFly;
+	bool isDeath;
+	bool isDoneDeath;
+	int ani;
 	vector <LPGAMEENTITY> listEffect;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEENTITY>* coObjects);

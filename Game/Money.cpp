@@ -17,10 +17,10 @@ void Money::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (!isOnTop)
 	{
-		left = x;
-		top = y + 16;
+		left = x-3;
+		top = y + 3;
 		right = left + 7;
-		bottom = top + 1;
+		bottom = top + 14;
 	}
 	else
 	{

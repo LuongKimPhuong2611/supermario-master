@@ -8,6 +8,17 @@ VenusNoFire::VenusNoFire(Player* mario)
 }
 void VenusNoFire::Render()
 {
+	if (isDoneDeath)
+		return;
+	if (isDeath)
+	{
+		animationSet->at(VENUS_STATE_DIE)->Render(nx, x, y);
+		if (animationSet->at(VENUS_STATE_DIE)->GetCurrentFrame() == 4)
+		{
+			isDoneDeath = true;
+		}
+		return;
+	}
 	if (isdone)
 		animationSet->at(17)->Render(nx, x, y);
 	animationSet->at(state)->Render(nx, x, y);
@@ -39,7 +50,7 @@ void VenusNoFire::SetState(int state)
 
 void VenusNoFire::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (isdone)
+	if (isDeath)
 		return;
 	left = x;
 	top = y;
@@ -49,7 +60,7 @@ void VenusNoFire::GetBoundingBox(float& left, float& top, float& right, float& b
 
 void VenusNoFire::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 {
-	if (isdone)
+	if (isDeath)
 		return;
 	Entity::Update(dt, coObjects);
 	y += dy;

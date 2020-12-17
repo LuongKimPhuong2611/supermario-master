@@ -10,6 +10,7 @@
 #define VENUS_STATE_SHOOT_45_MORE	1
 #define VENUS_STATE_MOVE_DOWN		2
 #define	VENUS_STATE_MOVE_UP			3
+#define	VENUS_STATE_DIE				4
 
 class VenusNoFire : public Entity
 {
@@ -22,6 +23,8 @@ public:
 	bool moveup = true;
 	bool not_in_pipeline = false;
 	bool fight;
+	bool isDeath;
+	bool isDoneDeath;
 	VenusNoFire(Player* mario);
 	virtual void SetState(int state);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
