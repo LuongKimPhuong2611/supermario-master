@@ -329,6 +329,7 @@ void Player::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 					{
 						if (goomba->GetState() != GOOMBA_STATE_DIE)
 						{
+
 							goomba->SetState(GOOMBA_STATE_DIE);
 							goomba->make100 = true;
 

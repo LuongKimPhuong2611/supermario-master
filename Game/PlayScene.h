@@ -73,6 +73,7 @@ protected:
 	vector<LPGAMEENTITY> listitems;
 	vector<LPGAMEENTITY> listCoins;
 	vector<LPGAMEENTITY> listBrick;
+	vector<LPGAMEENTITY> listPipe;
 	int idStage;
 	int mapWidth, mapHeight;
 	int camMaxWidth;

@@ -1490,6 +1490,7 @@ void PlayScene::Render()
 		listBullets[i]->Render();
 	tail->Render();
 	gameHUD->Draw();
+
 	DarkenTheScreen();
 }
 

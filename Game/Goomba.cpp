@@ -73,6 +73,7 @@ void Goomba::Update(DWORD dt, vector<LPGAMEENTITY>* coObjects)
 	// 	
 	//DebugOut(L"id goomba %d \n",id_goomba);
 	//
+	DebugOut(L"vx = %f vy = %f \n", vx, vy);
 	if (isDeath)
 		return;
 	if (id_goomba == 2)
@@ -259,6 +260,7 @@ void Goomba::Render()
 		listEffect[i]->Render();
 	}
 	RenderBoundingBox();
+	DebugOut(L"animation %d \n", state);
 }
 
 void Goomba::SetSpeed()

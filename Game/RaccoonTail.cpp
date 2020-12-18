@@ -9,6 +9,8 @@
 
 RaccoonTail::RaccoonTail()
 {
+	x = 0;
+	y = 0;
 	/*x = position.x;
 	y = position.y;
 	this->nx = nx;*/
@@ -84,10 +86,7 @@ void RaccoonTail::GetBoundingBox(float& left, float& top, float& right, float& b
 	}
 	else
 	{
-		left = 0;
-		top = 0;
-		right = 0;
-		bottom = 0;
+		return;
 	}
 }
 
